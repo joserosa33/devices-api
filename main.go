@@ -19,13 +19,17 @@ func main() {
 	databasePassword := os.Getenv("DB_PASSWORD")
 	databaseName := os.Getenv("DB_NAME")
 	envPort := os.Getenv("PORT")
+	connectionString := os.Getenv("CONNECTION_STRING")
 
 	// logger
 	logger := logger.NewLogger(os.Stdout, logger.Info)
 
 	// connections
-	database := providers.GetDataBaseConnection(logger, providers.DatabaseConfiguration{User: databaseUser, Password: databasePassword, Name: databaseName})
-	database.Ping()
+	database := providers.GetDataBaseConnection(logger, providers.DatabaseConfiguration{User: databaseUser, Password: databasePassword, Name: databaseName, ConnectionString: connectionString})
+
+	if database == nil {
+		return
+	}
 
 	//handlers
 	errorHandler := handlers.NewErrorHandler(logger)

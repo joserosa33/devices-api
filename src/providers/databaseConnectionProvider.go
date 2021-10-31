@@ -9,9 +9,10 @@ import (
 )
 
 type DatabaseConfiguration struct {
-	User     string
-	Password string
-	Name     string
+	User             string
+	Password         string
+	Name             string
+	ConnectionString string
 }
 
 const (
@@ -23,18 +24,25 @@ const (
 func GetDataBaseConnection(logger logger.Logger, databaseConfig DatabaseConfiguration) *sql.DB {
 	dbConfig := getConfigs(databaseConfig)
 
-	dbinfo := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", dbConfig.User, dbConfig.Password, dbConfig.Name)
-	db, _ := sql.Open("postgres", dbinfo)
+	connectionString := getConnectionString(dbConfig, true)
+	db, _ := sql.Open("postgres", connectionString)
 
 	_, err := db.Query("CREATE TABLE IF NOT EXISTS devices (id SERIAL PRIMARY KEY, name VARCHAR, brand VARCHAR, created VARCHAR);")
 
 	if err != nil {
 		logger.LogWarning("Creating devices database", "DatabaseConnector")
 
-		dbinfo := fmt.Sprintf("user=%s password=%s sslmode=disable", dbConfig.User, dbConfig.Password)
-		db, _ := sql.Open("postgres", dbinfo)
+		connectionString := getConnectionString(databaseConfig, false)
 
-		db.Exec("CREATE DATABASE devices;")
+		db, _ := sql.Open("postgres", connectionString)
+
+		_, err = db.Exec("CREATE DATABASE devices;")
+
+		if err != nil {
+			logger.LogError(err.Error(), "DatabaseConnector")
+			return nil
+		}
+
 		db.Close()
 		GetDataBaseConnection(logger, databaseConfig)
 	}
@@ -58,4 +66,24 @@ func getConfigs(databaseConfig DatabaseConfiguration) DatabaseConfiguration {
 	}
 
 	return databaseConfig
+}
+
+func getConnectionString(databaseConfig DatabaseConfiguration, addDatabaseName bool) string {
+	connectionString := ""
+
+	if databaseConfig.ConnectionString == "" {
+		connectionString = fmt.Sprintf("user=%s password=%s sslmode=disable", databaseConfig.User, databaseConfig.Password)
+
+		if addDatabaseName {
+			connectionString = fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", databaseConfig.User, databaseConfig.Password, databaseConfig.Name)
+		}
+	} else {
+		connectionString = fmt.Sprintf("%s?sslmode=disable", databaseConfig.ConnectionString)
+
+		if addDatabaseName {
+			connectionString = fmt.Sprintf("%s/%s?sslmode=disable", databaseConfig.ConnectionString, databaseConfig.Name)
+		}
+	}
+
+	return connectionString
 }
