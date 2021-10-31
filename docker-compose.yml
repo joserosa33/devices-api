@@ -1,0 +1,27 @@
+version: "3.4"
+services:
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: devices
+  devices:
+    image: devices-api:local
+    restart: always
+    ports:
+      - "3000:3000"
+    build:
+      context: .
+      dockerfile: docker/server.dockerfile
+      args:
+        PORT: 3000
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    environment:
+      PORT: 3000
+      CONNECTION_STRING: postgres://postgres:password@postgres
