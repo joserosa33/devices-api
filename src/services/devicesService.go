@@ -24,11 +24,11 @@ type DeviceService interface {
 	GetByBrand(brand string) []models.Device
 }
 
-func NewDeviceService(sql *sql.DB, logger logger.Logger) DeviceService {
+func NewDeviceService(sql *sql.DB, logger logger.Logger, errorHandler handlers.ErrorHandler) DeviceService {
 	return &deviceService{
 		database:     sql,
 		logger:       logger,
-		errorHandler: handlers.NewErrorHandler(logger),
+		errorHandler: errorHandler,
 	}
 }
 
@@ -98,7 +98,7 @@ func (d *deviceService) Update(device models.Device) int {
 	var id int
 
 	row := d.database.QueryRow(
-		"UPDATE devices SET name=$1, brand=$2, created=$3 WHERE id=$4 returnin id",
+		"UPDATE devices SET name=$1, brand=$2, created=$3 WHERE id=$4 returning id",
 		device.Name, device.Brand, device.Created, device.Id)
 
 	err := row.Scan(&id)

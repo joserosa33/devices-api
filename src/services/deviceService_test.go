@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/devices/src/handlers"
 	"github.com/devices/src/logger"
 	"github.com/devices/src/models"
 )
@@ -19,7 +20,9 @@ func TestGetByIdWithoutError(t *testing.T) {
 	db, mock, _ := sqlmock.New()
 	buffer := &bytes.Buffer{}
 	loggerInstance := logger.NewLogger(buffer, logger.Info)
-	deviceService := NewDeviceService(db, loggerInstance)
+	errorHandler := handlers.NewErrorHandler(loggerInstance)
+	deviceService := NewDeviceService(db, loggerInstance, errorHandler)
+
 	expectedDevice := models.Device{Id: 0, Name: "testName", Brand: "testBrand", Created: "testCreated"}
 
 	deviceMockRow := mock.NewRows([]string{"id", "name", "brand", "created"}).AddRow("0", "testName", "testBrand", "testCreated")
@@ -41,7 +44,9 @@ func TestGetByIdWithError(t *testing.T) {
 	db, mock, _ := sqlmock.New()
 	buffer := &bytes.Buffer{}
 	loggerInstance := logger.NewLogger(buffer, logger.Info)
-	deviceService := NewDeviceService(db, loggerInstance)
+	errorHandler := handlers.NewErrorHandler(loggerInstance)
+	deviceService := NewDeviceService(db, loggerInstance, errorHandler)
+
 	expectedDevice := models.Device{}
 	expectedError := "Test Error"
 
@@ -69,7 +74,8 @@ func TestAddWithoutError(t *testing.T) {
 	buffer := &bytes.Buffer{}
 	loggerInstance := logger.NewLogger(buffer, logger.Info)
 	db, mock, _ := sqlmock.New()
-	deviceService := NewDeviceService(db, loggerInstance)
+	errorHandler := handlers.NewErrorHandler(loggerInstance)
+	deviceService := NewDeviceService(db, loggerInstance, errorHandler)
 
 	deviceToAdd := models.Device{Name: "testName", Brand: "testBrand", Created: "testCreated"}
 	expectedId := 0
@@ -95,7 +101,8 @@ func TestAddWithError(t *testing.T) {
 	buffer := &bytes.Buffer{}
 	loggerInstance := logger.NewLogger(buffer, logger.Info)
 	db, mock, _ := sqlmock.New()
-	deviceService := NewDeviceService(db, loggerInstance)
+	errorHandler := handlers.NewErrorHandler(loggerInstance)
+	deviceService := NewDeviceService(db, loggerInstance, errorHandler)
 
 	deviceToAdd := models.Device{Name: "testName", Brand: "testBrand", Created: "testCreated"}
 	expectedId := -1
@@ -127,7 +134,8 @@ func TestGetAllWithoutError(t *testing.T) {
 	buffer := &bytes.Buffer{}
 	loggerInstance := logger.NewLogger(buffer, logger.Info)
 	db, mock, _ := sqlmock.New()
-	deviceService := NewDeviceService(db, loggerInstance)
+	errorHandler := handlers.NewErrorHandler(loggerInstance)
+	deviceService := NewDeviceService(db, loggerInstance, errorHandler)
 
 	expectedFirstDevice := models.Device{Id: 1, Name: "testName1", Brand: "testBrand1", Created: "testCreated1"}
 
@@ -158,7 +166,8 @@ func TestGetAllWithError(t *testing.T) {
 	buffer := &bytes.Buffer{}
 	loggerInstance := logger.NewLogger(buffer, logger.Info)
 	db, mock, _ := sqlmock.New()
-	deviceService := NewDeviceService(db, loggerInstance)
+	errorHandler := handlers.NewErrorHandler(loggerInstance)
+	deviceService := NewDeviceService(db, loggerInstance, errorHandler)
 
 	expectedError := "Test Error"
 
@@ -186,7 +195,8 @@ func TestUpdateWithoutError(t *testing.T) {
 	buffer := &bytes.Buffer{}
 	loggerInstance := logger.NewLogger(buffer, logger.Info)
 	db, mock, _ := sqlmock.New()
-	deviceService := NewDeviceService(db, loggerInstance)
+	errorHandler := handlers.NewErrorHandler(loggerInstance)
+	deviceService := NewDeviceService(db, loggerInstance, errorHandler)
 
 	deviceToUpdate := models.Device{Id: 0, Name: "testName", Brand: "testBrand", Created: "testCreated"}
 	expectedId := 0
@@ -212,7 +222,8 @@ func TestUpdateWithError(t *testing.T) {
 	buffer := &bytes.Buffer{}
 	loggerInstance := logger.NewLogger(buffer, logger.Info)
 	db, mock, _ := sqlmock.New()
-	deviceService := NewDeviceService(db, loggerInstance)
+	errorHandler := handlers.NewErrorHandler(loggerInstance)
+	deviceService := NewDeviceService(db, loggerInstance, errorHandler)
 
 	deviceToUpdate := models.Device{Id: 0, Name: "testName", Brand: "testBrand", Created: "testCreated"}
 	expectedId := -1
@@ -244,7 +255,8 @@ func TestDeleteWithoutError(t *testing.T) {
 	buffer := &bytes.Buffer{}
 	loggerInstance := logger.NewLogger(buffer, logger.Info)
 	db, mock, _ := sqlmock.New()
-	deviceService := NewDeviceService(db, loggerInstance)
+	errorHandler := handlers.NewErrorHandler(loggerInstance)
+	deviceService := NewDeviceService(db, loggerInstance, errorHandler)
 
 	idToDelete := 0
 
@@ -269,7 +281,8 @@ func TestDeleteWithError(t *testing.T) {
 	buffer := &bytes.Buffer{}
 	loggerInstance := logger.NewLogger(buffer, logger.Info)
 	db, mock, _ := sqlmock.New()
-	deviceService := NewDeviceService(db, loggerInstance)
+	errorHandler := handlers.NewErrorHandler(loggerInstance)
+	deviceService := NewDeviceService(db, loggerInstance, errorHandler)
 
 	idToDelete := 0
 	expectedId := -1
@@ -301,7 +314,8 @@ func TestGetByBrandWithoutError(t *testing.T) {
 	buffer := &bytes.Buffer{}
 	loggerInstance := logger.NewLogger(buffer, logger.Info)
 	db, mock, _ := sqlmock.New()
-	deviceService := NewDeviceService(db, loggerInstance)
+	errorHandler := handlers.NewErrorHandler(loggerInstance)
+	deviceService := NewDeviceService(db, loggerInstance, errorHandler)
 
 	expectedFirstDevice := models.Device{Id: 1, Name: "testName1", Brand: "testBrand", Created: "testCreated1"}
 
@@ -333,7 +347,8 @@ func TestGetByBrandWithError(t *testing.T) {
 	buffer := &bytes.Buffer{}
 	loggerInstance := logger.NewLogger(buffer, logger.Info)
 	db, mock, _ := sqlmock.New()
-	deviceService := NewDeviceService(db, loggerInstance)
+	errorHandler := handlers.NewErrorHandler(loggerInstance)
+	deviceService := NewDeviceService(db, loggerInstance, errorHandler)
 
 	expectedError := "Test Error"
 
