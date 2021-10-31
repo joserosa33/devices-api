@@ -6,7 +6,8 @@ import (
 	"testing"
 )
 
-// When_AllValuesProvided_And_TestLogInfo_Then_ShouldHaveTestMessageAndStep
+// When all values are provided
+// Then should have message and step
 func TestLogInfo(t *testing.T) {
 	// arrange
 	buffer := &bytes.Buffer{}
@@ -24,7 +25,8 @@ func TestLogInfo(t *testing.T) {
 	}
 }
 
-// When_AllValuesAreEmpty_And_TestLogInfo_Then_ShouldHaveEmptyTestMessageAndStep
+// When all values are empty
+// Then should have empty message and step
 func TestLogInfoEmpty(t *testing.T) {
 	// arrange
 	buffer := &bytes.Buffer{}
@@ -42,7 +44,8 @@ func TestLogInfoEmpty(t *testing.T) {
 	}
 }
 
-// When_LogelLevelIsHigherThanInfo_And_TestLogInfo_Then_ShouldLogNothing
+// When log level is higher that info
+// Then should log nothing
 func TestLogInfoHigherLogLevel(t *testing.T) {
 	// arrange
 	buffer := &bytes.Buffer{}
@@ -60,7 +63,8 @@ func TestLogInfoHigherLogLevel(t *testing.T) {
 	}
 }
 
-// When_AllValuesProvided_And_TestLogWarning_Then_ShouldHaveTestMessageAndStep
+// when all values are provided
+// Then should have message and step
 func TestLogWarning(t *testing.T) {
 	// arrange
 	buffer := &bytes.Buffer{}
@@ -78,7 +82,8 @@ func TestLogWarning(t *testing.T) {
 	}
 }
 
-// When_AllValuesAreEmpty_And_TestLogWarning_Then_ShouldHaveEmptyTestMessageAndStep
+// When all values are empty
+// Then should have empty message and step
 func TestLogWarningEmpty(t *testing.T) {
 	// arrange
 	buffer := &bytes.Buffer{}
@@ -96,7 +101,8 @@ func TestLogWarningEmpty(t *testing.T) {
 	}
 }
 
-// When_LogLevelHigherThanWarning_And_TestLogWarning_Then_ShouldLogNothing
+// When log level is higher that warning
+// Then should log nothing
 func TestLogWarningHigherLogLevel(t *testing.T) {
 	// arrange
 	buffer := &bytes.Buffer{}
@@ -114,7 +120,8 @@ func TestLogWarningHigherLogLevel(t *testing.T) {
 	}
 }
 
-// When_AllValuesAreEmpty_And_TestLogError_Then_ShouldHaveTestMessageAndStep
+// when all values are provided
+// Then should have message and step
 func TestLogError(t *testing.T) {
 	// arrange
 	buffer := &bytes.Buffer{}
@@ -132,7 +139,8 @@ func TestLogError(t *testing.T) {
 	}
 }
 
-// When_AllValuesAreEmpty_And_TestLogError_Then_ShouldHaveEmptyTestMessageAndStep
+// When all values are empty
+// Then should have empty message and step
 func TestLogErrorEmpty(t *testing.T) {
 	// arrange
 	buffer := &bytes.Buffer{}
@@ -150,7 +158,8 @@ func TestLogErrorEmpty(t *testing.T) {
 	}
 }
 
-// When_LogelLevelIsHigherThanError_And_TestLogError_Then_ShouldLogNothing
+// When log level is higher that error
+// Then should log nothing
 func TestLogErrorHigherLogLevel(t *testing.T) {
 	// arrange
 	buffer := &bytes.Buffer{}
