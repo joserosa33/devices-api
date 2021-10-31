@@ -13,7 +13,12 @@ This repository is a implementation of an API written in go with the objective o
 This api is connected to a postgres database.
 
 ### Steps
+#### Using docker-compose
+Being on the project root just run
 
+    docker-compose up
+
+#### Manually
 Before running the solution please execute
 
     docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres
@@ -22,8 +27,6 @@ After just run
 
     go run main.go
 
-
 ### Future improvements
 
  - Create swagger 
- - Create a docker-compose
