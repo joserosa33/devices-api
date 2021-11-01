@@ -69,7 +69,7 @@ func (d *deviceService) Add(device models.Device) int {
 func (d *deviceService) GetAll() []models.Device {
 	var devices []models.Device
 
-	rows, err := d.database.Query("SELECT * FROM device")
+	rows, err := d.database.Query("SELECT * FROM devices")
 
 	if d.errorHandler.HandleError(err, "DeviceService/GetAll") {
 		return devices
