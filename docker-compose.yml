@@ -8,6 +8,9 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_USER: postgres
       POSTGRES_DB: devices
+    restart: always
+    volumes:
+      - postgres:/var/lib/postgresql/data
   devices:
     image: devices-api:local
     restart: always
@@ -25,3 +28,6 @@ services:
     environment:
       PORT: 3000
       CONNECTION_STRING: postgres://postgres:password@postgres
+  
+volumes:
+  postgres:
