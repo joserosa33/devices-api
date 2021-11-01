@@ -1,7 +1,7 @@
 # Devices API
 
-For every reader please be aware that before this contact I didn't any knowledge about the language go.
-This repository is a implementation of an API written in go with the objective of executing the following operations:
+This repository resutls from a challenge made to develop a API to manage devices written in go, a language that previously I didn't had any contact. 
+So the result is a API that supports the following operations:
 
  - Add device
  - Get device by id
